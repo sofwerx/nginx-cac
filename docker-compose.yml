@@ -1,0 +1,9 @@
+version: '2.1'
+
+services:
+
+  nginx-cac:
+    container_name: nginx-cac
+    hostname: ${NGINX_CAC_HOSTNAME}
+    build: .
+    image: sofwerx/nginx-cac:latest

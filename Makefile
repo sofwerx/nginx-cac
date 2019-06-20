@@ -9,14 +9,14 @@ run:
 # Generate a self-signed certificate for the NGINX server side
 # Since I want it to use EC we have to generate the privkey separately
 cert: certificate.pem
-	
+
 certificate.pem: key.pem
 	openssl req -batch -sha256 -days 365             \
-	    -new -x509 -key key.pem -out certificate.pem \
+	    -new -x509 -key key.pem -out localhost-certificate.pem \
 	    -subj "/C=US/ST=Vulcan/O=DemoClientSSL/CN=localhost"
 
 key.pem:
-	openssl ecparam -genkey -name prime256v1 -out key.pem
+	openssl ecparam -genkey -name prime256v1 -out localhost-key.pem
 
 clean:
 	@rm -f key.pem certificate.pem
