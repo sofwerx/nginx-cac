@@ -45,7 +45,7 @@ COPY DoDRoots.crt    /etc/nginx
 #COPY localhost-key.pem         /etc/nginx
 
 COPY ./www /www
-COPY ./run.sh /www
+#COPY ./run.sh /www
 
 EXPOSE 443/tcp
 EXPOSE 5432/tcp

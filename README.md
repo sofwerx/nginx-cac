@@ -1,4 +1,17 @@
-# Introduction
+# CAC-protected WordPress Site
+
+Wordpress is included as a git submodule, and the Dockerfile adds MariaDB (mysql) and php.
+
+An existing WordPress database located at /www/database, and SSL certificate(s) under /ssl are assumed (/ssl and /www are currently mounted as docker volumes).
+
+As configured, the database port IS exposed (to the local docker machine network).
+
+NGINX configuration (default.conf) makes /www/WordPress the website root and requires either CAC authentication or a source IP address on the SOFWERX staff or data network. The .TMPL file is for future development that will fill in local configuration values from environment variables.
+
+# From Original README
+Upstream source: https://github.com/mpyne-navy/nginx-cac
+
+## Introduction
 
 This is the barest possible NGINX configuration and Docker infrastructure I
 could create that would enable developing a Web site that is protected using
@@ -7,7 +20,7 @@ client TLS using the DoD public key infrastructure (PKI).
 In other words, you can build web sites using NGINX as the SSL terminator that
 are CAC-protected starting from this as a baseline.
 
-# Building
+##Building
 
 You should be on Linux, with the normal command line toolchain (shell,
 coreutils, etc.), along with curl and zip.
@@ -29,9 +42,9 @@ This will:
 
 By default the new Docker image is called "nginx-cac".
 
-# Launching
+## Launching
 
-From there you can run it by using `make run`.
+#From there you can run it by using `make run`.
 
 This will start a new container based on the image built, expose port 443
 (inside the container) to a random port on the host.
@@ -39,7 +52,7 @@ This will start a new container based on the image built, expose port 443
 Use `docker ps` to ensure the new container is actually running. If so, Docker
 will tell you which port on the host corresponds to port 443 in the guest.
 
-# Testing
+## Testing
 
 In my case I had Firefox already configured to be able to authenticate against
 CAC-enabled websites, using PCSC Lite, the CACKey middleware, and by installing
@@ -59,7 +72,7 @@ well), Firefox reloaded the page and this time you should see "It works!".
 If you look into the Developer Tools you should also see that NGINX has sent
 back your Subject Name information as a server response header.
 
-## Windows Testing
+### Windows Testing
 
 I've also tested exporting the created Docker image (using
 `docker save nginx-cac:latest | gzip > nginx-cac.tar.gz`
@@ -73,13 +86,13 @@ As with Linux, you need to make sure you've setup your smartcard infrastructure
 (in my case I used OpenSC with Firefox) and that you've installed the DoD root
 and intermediate certificates into each browser.
 
-# Shutdown
+## Shutdown
 
 Don't forget to shutdown the Docker container when you're done (Use `docker ps`
 to find the short name of the running container and then `docker stop
 $short-name` from there).
 
-# Why?????
+## Why?????
 
 Because doing this all within DoD is so much harder than doing it in my off
 time. :(
