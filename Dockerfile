@@ -41,7 +41,8 @@ COPY DoDRoots.crt    /etc/nginx
 # server privkey
 #COPY localhost-key.pem         /etc/nginx
 
-COPY ./www /www
+# uncomment if you're building a new website
+#COPY ./www /www
 #COPY ./run.sh /www
 
 EXPOSE 443/tcp
