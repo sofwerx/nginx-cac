@@ -27,13 +27,10 @@ RUN pecl channel-update pear.php.net && pear channel update pear.php.net && pecl
 # Provided in this Docker package, and relatively simple configs
 COPY default.conf /etc/nginx/conf.d
 
-#The Makefile will generate DoDRoots.crt (which is just DoD Root CA {2,3,4}
-# concatenated) by downloading the certs from the DISA IASE website.  NGINX
+# The Makefile will generate DoDRoots.crt (the DoD root + intermediate certs
+# concatenated) by downloading the certs from the cyber.mil IASE website. NGINX
 # needs these certs to setup the CA it trusts for client authentication.
 #
-# This works only if the client supplies the intermediate certs so that the
-# server can complete the complete chain of trust from the smartcard cert all
-# the way to one of these 3 root certs.
 # See also the default.conf's configuration where we permit NGINX to have
 # multiple intermediate certs.
 COPY DoDRoots.crt    /etc/nginx
